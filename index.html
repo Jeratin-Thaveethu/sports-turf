@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gurukul's Sports | Bengaluru's Elite Sports Academy</title>
+    <meta name="description" content="Gurukul's Sports, Whitefield, Bengaluru: 32 world-class badminton courts, 10m air rifle & pistol shooting range, swimming pool, table tennis and more.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2309090b'/%3E%3Ctext x='32' y='44' font-family='Arial' font-weight='900' font-size='34' text-anchor='middle' fill='%23f59e0b'%3EG%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/images/hero-badminton.jpg">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+            --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+        }
+    </style>
+    <style>
+        [x-cloak] { display: none !important; }
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        span.hero-word { display: inline-block; }
+        .hero-word {
+            opacity: 0;
+            transform: translateY(110%);
+            animation: rise 0.9s cubic-bezier(.2,.8,.2,1) forwards;
+        }
+        @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+        .hero-zoom { animation: slowZoom 18s ease-out forwards; }
+        @keyframes slowZoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%;
+            background: #f59e0b; transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+        }
+        .nav-link:hover::after { transform: scaleX(1); }
+        .offer-bg { background-size: 200% 200%; animation: shift 8s ease infinite; }
+        @keyframes shift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .glow-pulse { animation: glow 3s ease-in-out infinite; }
+        @keyframes glow { 0%,100% { box-shadow: 0 0 30px -5px rgba(245,158,11,.35); } 50% { box-shadow: 0 0 60px 0 rgba(245,158,11,.6); } }
+        .noise::before {
+            content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .035; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal-element, .hero-word { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+            .hero-zoom, .offer-bg, .glow-pulse { animation: none !important; }
+        }
+    </style>
+</head>
+<body class="noise bg-zinc-950 text-zinc-100 font-sans overflow-x-hidden antialiased">
+
+    <!-- 1. Navigation -->
+    <header x-data="{ open: false, hidden: false, scrolled: false, lastY: 0 }"
+            @scroll.window="const y = window.scrollY; hidden = y > lastY && y > 120 && !open; scrolled = y > 20; lastY = y"
+            :class="[hidden ? '-translate-y-full' : 'translate-y-0', scrolled ? 'bg-zinc-950/80 backdrop-blur-md border-white/10 shadow-lg shadow-black/30' : 'bg-transparent border-transparent']"
+            class="fixed inset-x-0 top-0 z-50 border-b transition-all duration-300">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <a href="#home" class="font-display text-xl font-extrabold tracking-tight">
+                Gurukul's <span class="text-amber-500">Sports</span><sup class="ml-0.5 text-xs text-zinc-400">®</sup>
+            </a>
+            <ul class="hidden items-center gap-8 text-sm font-medium text-zinc-300 lg:flex">
+                <li><a href="#record" class="nav-link hover:text-white">Record</a></li>
+                <li><a href="#facilities" class="nav-link hover:text-white">Facilities</a></li>
+                <li><a href="#membership" class="nav-link hover:text-white">Membership</a></li>
+                <li><a href="#offers" class="nav-link hover:text-white">Offers</a></li>
+                <li><a href="#reviews" class="nav-link hover:text-white">Reviews</a></li>
+                <li><a href="#contact" class="nav-link hover:text-white">Contact</a></li>
+            </ul>
+            <a href="#contact" class="hidden rounded-full bg-amber-500 px-5 py-2.5 text-sm font-bold text-zinc-950 transition-transform duration-300 hover:scale-105 hover:bg-amber-400 lg:inline-block">
+                Book Now
+            </a>
+            <button @click="open = !open" class="text-2xl lg:hidden" :aria-expanded="open" aria-label="Toggle menu">
+                <i class="fa-solid" :class="open ? 'fa-xmark' : 'fa-bars'"></i>
+            </button>
+        </nav>
+        <div x-cloak x-show="open" x-transition @click.outside="open = false" class="border-t border-white/10 bg-zinc-950/95 backdrop-blur-md lg:hidden">
+            <ul class="flex flex-col gap-1 px-6 py-4 text-zinc-200" @click="open = false">
+                <li><a href="#record" class="block py-2">Record</a></li>
+                <li><a href="#facilities" class="block py-2">Facilities</a></li>
+                <li><a href="#membership" class="block py-2">Membership</a></li>
+                <li><a href="#offers" class="block py-2">Offers</a></li>
+                <li><a href="#reviews" class="block py-2">Reviews</a></li>
+                <li><a href="#contact" class="mt-2 block rounded-full bg-amber-500 py-2.5 text-center font-bold text-zinc-950">Book Now</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- 2. Hero -->
+        <section id="home" class="relative flex min-h-dvh items-center overflow-hidden">
+            <img src="assets/images/hero-badminton.jpg" alt="Doubles badminton match on a wooden indoor court" fetchpriority="high"
+                 class="hero-zoom absolute inset-0 h-full w-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/60"></div>
+
+            <div class="relative mx-auto w-full max-w-7xl px-6 pt-28 pb-20">
+                <p class="hero-word mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-amber-400" style="animation-delay:.1s">
+                    <i class="fa-solid fa-trophy"></i> Whitefield · Bengaluru
+                </p>
+                <h1 class="font-display max-w-4xl text-[clamp(2.5rem,7vw,6rem)] font-black leading-[0.95] tracking-tight">
+                    <span class="block overflow-hidden pb-1"><span class="hero-word" style="animation-delay:.2s">Train</span> <span class="hero-word" style="animation-delay:.28s">at</span> <span class="hero-word" style="animation-delay:.36s">Bengaluru’s</span></span>
+                    <span class="block overflow-hidden pb-1"><span class="hero-word bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent" style="animation-delay:.44s">Record-Breaking</span></span>
+                    <span class="block overflow-hidden pb-1"><span class="hero-word" style="animation-delay:.52s">Sports</span> <span class="hero-word" style="animation-delay:.6s">Hub</span></span>
+                </h1>
+                <p class="hero-word mt-8 max-w-xl text-lg text-zinc-300 md:text-xl" style="animation-delay:.8s">
+                    Home to 32+ World-Class Courts, Olympic-Grade Shooting Ranges, and Premium Amenities.
+                </p>
+                <div class="hero-word mt-10 flex flex-wrap gap-4" style="animation-delay:1s">
+                    <a href="#contact" class="group inline-flex items-center gap-3 rounded-full bg-amber-500 px-8 py-4 font-bold text-zinc-950 shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:bg-amber-400">
+                        Book Court Now <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                    <a href="#membership" class="inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/5 px-8 py-4 font-semibold backdrop-blur transition-all duration-300 hover:border-white/60 hover:bg-white/10">
+                        Explore Memberships
+                    </a>
+                </div>
+            </div>
+
+            <a href="#record" class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-widest text-zinc-400 md:flex" aria-label="Scroll down">
+                Scroll <i class="fa-solid fa-chevron-down animate-bounce"></i>
+            </a>
+        </section>
+
+        <!-- 3. World Record & Counters -->
+        <section id="record" class="relative overflow-hidden border-y border-amber-500/30 bg-zinc-900 py-24">
+            <img src="assets/images/court-empty.jpg" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover opacity-10">
+            <div class="relative mx-auto max-w-7xl px-6">
+                <div class="reveal-element mx-auto max-w-3xl text-center">
+                    <span class="inline-flex items-center gap-2 rounded-full bg-amber-500 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-zinc-950">
+                        <i class="fa-solid fa-award"></i> Official World Record
+                    </span>
+                    <h2 class="font-display mt-6 text-4xl font-black tracking-tight md:text-5xl">
+                        The Most Badminton Courts in a <span class="text-amber-500">Single Academy</span>
+                    </h2>
+                    <p class="mt-5 text-lg text-zinc-400">Certified for scale, built for champions. Every court, every shuttle, every rally under one roof.</p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-2 gap-6 lg:grid-cols-4">
+                    <div class="reveal-element rounded-2xl border border-white/10 bg-zinc-950/60 p-8 text-center backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50">
+                        <div class="font-display text-5xl font-black text-amber-500 md:text-6xl"><span class="counter" data-target="32">0</span>+</div>
+                        <p class="mt-3 text-sm font-medium text-zinc-400">World-Class Badminton Courts</p>
+                    </div>
+                    <div class="reveal-element rounded-2xl border border-white/10 bg-zinc-950/60 p-8 text-center backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50" style="transition-delay:.1s">
+                        <div class="font-display text-5xl font-black text-amber-500 md:text-6xl"><span class="counter" data-target="10">0</span>k+</div>
+                        <p class="mt-3 text-sm font-medium text-zinc-400">Registered Athletes Trained</p>
+                    </div>
+                    <div class="reveal-element rounded-2xl border border-white/10 bg-zinc-950/60 p-8 text-center backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50" style="transition-delay:.2s">
+                        <div class="font-display text-5xl font-black text-amber-500 md:text-6xl"><span class="counter" data-target="15">0</span>+</div>
+                        <p class="mt-3 text-sm font-medium text-zinc-400">Pro Coaching Staff</p>
+                    </div>
+                    <div class="reveal-element rounded-2xl border border-white/10 bg-zinc-950/60 p-8 text-center backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50" style="transition-delay:.3s">
+                        <div class="font-display text-5xl font-black text-amber-500 md:text-6xl"><span class="counter" data-target="100">0</span>%</div>
+                        <p class="mt-3 text-sm font-medium text-zinc-400">Premium BWF Synthetic & Wooden Flooring</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Sports & Amenities -->
+        <section id="facilities" class="py-28">
+            <div class="mx-auto max-w-7xl px-6">
+                <div class="reveal-element mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-500">Facilities</p>
+                        <h2 class="font-display mt-3 text-4xl font-black tracking-tight md:text-6xl">One Campus.<br>Every Game.</h2>
+                    </div>
+                    <p class="max-w-md text-zinc-400">From championship badminton to precision shooting and a full aquatic facility, everything you need to train, compete and unwind.</p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <article class="reveal-element group relative h-[26rem] overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50 lg:col-span-2">
+                        <img src="assets/images/badminton.jpg" alt="Badminton racket and shuttlecocks on a green court" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-8">
+                            <span class="mb-3 inline-block rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-zinc-950">32+ Courts</span>
+                            <h3 class="font-display text-3xl font-extrabold">Badminton Arenas</h3>
+                            <p class="mt-2 max-w-lg text-zinc-300 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">Premium BWF synthetic and wooden courts with tournament-grade lighting, racket rentals and expert coaching for every level.</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal-element group relative h-[26rem] overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50" style="transition-delay:.1s">
+                        <img src="assets/images/shooting.jpg" alt="Shooter aiming at an indoor range" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-8">
+                            <span class="mb-3 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-bold backdrop-blur">New · 10m Range</span>
+                            <h3 class="font-display text-2xl font-extrabold">Air Rifle & Pistol Shooting</h3>
+                            <p class="mt-2 text-zinc-300 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">Modern electronic targets and professional coaching for beginners and competitive shooters.</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal-element group relative h-[26rem] overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50">
+                        <img src="assets/images/swimming.jpg" alt="Indoor swimming pool with lanes" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-8">
+                            <span class="mb-3 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-bold backdrop-blur">Indoor</span>
+                            <h3 class="font-display text-2xl font-extrabold">Swimming Pool & Aquatics</h3>
+                            <p class="mt-2 text-zinc-300 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">A clean, climate-friendly indoor pool for laps, lessons and recovery sessions.</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal-element group relative h-[26rem] overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50" style="transition-delay:.1s">
+                        <img src="assets/images/table-tennis.jpg" alt="Player returning a table tennis ball" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-8">
+                            <span class="mb-3 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-bold backdrop-blur">Lounge</span>
+                            <h3 class="font-display text-2xl font-extrabold">Table Tennis Lounge</h3>
+                            <p class="mt-2 text-zinc-300 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">Fast tables, great lighting and a buzzing community for quick rallies or serious drills.</p>
+                        </div>
+                    </article>
+
+                    <article class="reveal-element group relative h-[26rem] overflow-hidden rounded-3xl border border-white/10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/50" style="transition-delay:.2s">
+                        <img src="assets/images/recreation.jpg" alt="Pool tables in a dimly lit recreation room" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-8">
+                            <span class="mb-3 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-bold backdrop-blur">Unwind</span>
+                            <h3 class="font-display text-2xl font-extrabold">Recreation Lounge</h3>
+                            <p class="mt-2 text-zinc-300 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">Pool tables and a lively dance floor to relax and reconnect after the game.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Membership -->
+        <section id="membership" class="relative bg-zinc-900/50 py-28">
+            <div class="mx-auto max-w-7xl px-6">
+                <div class="reveal-element mx-auto mb-16 max-w-2xl text-center">
+                    <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-500">Membership</p>
+                    <h2 class="font-display mt-3 text-4xl font-black tracking-tight md:text-5xl">Pick Your Game Plan</h2>
+                    <p class="mt-4 text-zinc-400">Flexible options whether you play once a week or train every day.</p>
+                </div>
+
+                <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-3">
+                    <div class="reveal-element rounded-3xl border border-white/10 bg-zinc-950 p-10 transition-all duration-300 hover:-translate-y-2 hover:border-white/30">
+                        <i class="fa-solid fa-ticket text-3xl text-zinc-400"></i>
+                        <h3 class="font-display mt-6 text-2xl font-extrabold">Casual Player Pass</h3>
+                        <p class="mt-2 text-sm text-zinc-500">Pay as you play · Hourly</p>
+                        <ul class="mt-8 space-y-4 text-zinc-300">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Hourly court bookings</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Basic equipment rental options</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Book online or at the desk</li>
+                        </ul>
+                        <a href="#contact" class="mt-10 block rounded-full border border-white/20 py-3.5 text-center font-semibold transition-colors hover:bg-white hover:text-zinc-950">Book a Court</a>
+                    </div>
+
+                    <div class="reveal-element glow-pulse relative rounded-3xl border-2 border-amber-500 bg-gradient-to-b from-zinc-900 to-zinc-950 p-10 transition-all duration-300 hover:-translate-y-2 lg:py-14" style="transition-delay:.1s">
+                        <span class="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-amber-500 px-5 py-1.5 text-xs font-black uppercase tracking-widest text-zinc-950">Most Popular</span>
+                        <i class="fa-solid fa-medal text-3xl text-amber-500"></i>
+                        <h3 class="font-display mt-6 text-2xl font-extrabold">Academy Pro Training</h3>
+                        <p class="mt-2 text-sm text-zinc-400">Structured coaching · Monthly</p>
+                        <ul class="mt-8 space-y-4 text-zinc-200">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Regular monthly coaching regimens</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Tournament preparation</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Pro coaching staff & progress tracking</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Priority court slots</li>
+                        </ul>
+                        <a href="#contact" class="mt-10 block rounded-full bg-amber-500 py-3.5 text-center font-bold text-zinc-950 transition-all hover:scale-[1.02] hover:bg-amber-400">Join the Academy</a>
+                    </div>
+
+                    <div class="reveal-element rounded-3xl border border-white/10 bg-zinc-950 p-10 transition-all duration-300 hover:-translate-y-2 hover:border-white/30" style="transition-delay:.2s">
+                        <i class="fa-solid fa-crown text-3xl text-zinc-400"></i>
+                        <h3 class="font-display mt-6 text-2xl font-extrabold">Elite Multi-Sport Access</h3>
+                        <p class="mt-2 text-sm text-zinc-500">All-access · Unlimited</p>
+                        <ul class="mt-8 space-y-4 text-zinc-300">
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Unlimited court access</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Swimming pool access</li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Shooting range sessions</li>
+                        </ul>
+                        <a href="#contact" class="mt-10 block rounded-full border border-white/20 py-3.5 text-center font-semibold transition-colors hover:bg-white hover:text-zinc-950">Go Elite</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Offers -->
+        <section id="offers" class="px-6 py-20">
+            <div class="reveal-element offer-bg relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-gradient-to-r from-red-600 via-orange-500 to-amber-600 p-10 md:p-16">
+                <img src="assets/images/shuttle-closeup.jpg" alt="" loading="lazy" decoding="async" class="absolute inset-y-0 right-0 hidden h-full w-1/2 object-cover opacity-30 mix-blend-multiply md:block" style="mask-image:linear-gradient(to right,transparent,black 60%);-webkit-mask-image:linear-gradient(to right,transparent,black 60%)">
+                <div class="relative max-w-2xl">
+                    <span class="inline-flex items-center gap-2 rounded-full bg-zinc-950/30 px-4 py-1.5 text-xs font-bold uppercase tracking-widest backdrop-blur">
+                        <i class="fa-solid fa-bolt"></i> Limited Time
+                    </span>
+                    <h2 class="font-display mt-6 text-4xl font-black leading-tight md:text-5xl">Festive Sports Surge</h2>
+                    <p class="mt-4 text-lg text-white/90 md:text-xl">Get <strong class="text-white">20% off</strong> on bulk badminton court block-bookings this month.</p>
+                    <a href="#contact" class="mt-8 inline-flex items-center gap-3 rounded-full bg-zinc-950 px-8 py-4 font-bold transition-transform duration-300 hover:scale-105">
+                        Claim Offer <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Testimonials -->
+        <section id="reviews" class="py-28">
+            <div class="mx-auto max-w-7xl px-6">
+                <div class="reveal-element mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-500">Testimonials</p>
+                        <h2 class="font-display mt-3 text-4xl font-black tracking-tight md:text-5xl">Players Love It Here</h2>
+                    </div>
+                    <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-zinc-900 px-6 py-4">
+                        <i class="fa-brands fa-google text-2xl"></i>
+                        <div>
+                            <div class="flex items-center gap-2"><span class="font-display text-2xl font-black">4.2</span><span class="text-amber-400"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star-half-stroke"></i></span></div>
+                            <p class="text-xs text-zinc-400">596+ Google reviews</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                    <figure class="reveal-element relative rounded-3xl border border-white/10 bg-zinc-900 p-10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/40">
+                        <i class="fa-solid fa-quote-right absolute right-8 top-8 text-5xl text-white/5"></i>
+                        <div class="text-amber-400"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <blockquote class="mt-6 text-lg leading-relaxed text-zinc-200">“Incredible facilities. The sheer scale of 32 badminton courts is mind-blowing. Booking via Playo is seamless, and court lighting is top-tier.”</blockquote>
+                        <figcaption class="mt-8 flex items-center gap-4">
+                            <span class="font-display grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-amber-400 to-orange-600 font-black text-zinc-950">RK</span>
+                            <div><p class="font-semibold">Rajesh K.</p><p class="text-sm text-zinc-500">Badminton regular</p></div>
+                        </figcaption>
+                    </figure>
+                    <figure class="reveal-element relative rounded-3xl border border-white/10 bg-zinc-900 p-10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/40" style="transition-delay:.1s">
+                        <i class="fa-solid fa-quote-right absolute right-8 top-8 text-5xl text-white/5"></i>
+                        <div class="text-amber-400"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <blockquote class="mt-6 text-lg leading-relaxed text-zinc-200">“The newly added air rifle range is a game-changer for Bengaluru sports enthusiasts. Clean, professional coaching.”</blockquote>
+                        <figcaption class="mt-8 flex items-center gap-4">
+                            <span class="font-display grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 font-black text-zinc-950">PM</span>
+                            <div><p class="font-semibold">Priya M.</p><p class="text-sm text-zinc-500">Shooting range member</p></div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Location & Contact -->
+        <section id="contact" class="border-t border-white/10 bg-zinc-900/50 py-28">
+            <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-2">
+                <div class="reveal-element">
+                    <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-500">Visit Us</p>
+                    <h2 class="font-display mt-3 text-4xl font-black tracking-tight md:text-5xl">Come Play With Us</h2>
+                    <ul class="mt-10 space-y-8">
+                        <li class="flex gap-5">
+                            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-amber-500/10 text-amber-500"><i class="fa-solid fa-location-dot"></i></span>
+                            <div><p class="font-semibold">Address</p><p class="mt-1 text-zinc-400">Gurukul's Sports®, 176/1, Varthur Main Rd, Thubarahalli, Whitefield, Bengaluru, Karnataka 560066</p></div>
+                        </li>
+                        <li class="flex gap-5">
+                            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-amber-500/10 text-amber-500"><i class="fa-regular fa-clock"></i></span>
+                            <div><p class="font-semibold">Opening Hours</p><p class="mt-1 text-zinc-400">Open daily · 5:30 AM – 11:00 PM</p></div>
+                        </li>
+                        <li class="flex gap-5">
+                            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-amber-500/10 text-amber-500"><i class="fa-solid fa-phone"></i></span>
+                            <div>
+                                <p class="font-semibold">Call Us</p>
+                                <p class="mt-1 flex flex-col text-zinc-400">
+                                    <a href="tel:+919482156333" class="hover:text-amber-400">+91 94821 56333</a>
+                                    <a href="tel:+918884080587" class="hover:text-amber-400">+91 88840 80587</a>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="https://maps.app.goo.gl/duiehSpWthxsAFRx9" target="_blank" rel="noopener" class="mt-10 inline-flex items-center gap-3 rounded-full bg-amber-500 px-8 py-4 font-bold text-zinc-950 transition-transform duration-300 hover:scale-105">
+                        <i class="fa-solid fa-diamond-turn-right"></i> Get Directions
+                    </a>
+                </div>
+                <div class="reveal-element overflow-hidden rounded-3xl border border-white/10" style="transition-delay:.1s">
+                    <iframe title="Gurukul's Sports location on Google Maps"
+                            src="https://maps.google.com/maps?q=12.956462,77.7200364&z=17&output=embed"
+                            class="h-full min-h-[420px] w-full" style="filter:invert(90%) hue-rotate(180deg) grayscale(40%)"
+                            referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/10 py-10">
+        <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-sm text-zinc-500 md:flex-row">
+            <p class="font-display font-extrabold text-zinc-300">Gurukul's <span class="text-amber-500">Sports</span>®</p>
+            <p>© <span id="year"></span> Gurukul's Sports, Bengaluru. All rights reserved.</p>
+            <p>Photos: <a href="https://unsplash.com" target="_blank" rel="noopener" class="hover:text-zinc-300">Unsplash</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const animateCounter = (el) => {
+            const target = +el.dataset.target, duration = 1800, start = performance.now();
+            const tick = (now) => {
+                const p = Math.min((now - start) / duration, 1);
+                el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                entry.target.querySelectorAll('.counter').forEach(animateCounter);
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal-element').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
