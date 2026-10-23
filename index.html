@@ -56,10 +56,13 @@
             content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .035; mix-blend-mode: overlay;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
+        .booked-stripes { background-image: repeating-linear-gradient(135deg, transparent 0 6px, rgba(255,255,255,.05) 6px 12px); }
+        .pop { animation: pop .5s cubic-bezier(.2,1.4,.4,1) both; }
+        @keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             .reveal-element, .hero-word { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
-            .hero-zoom, .offer-bg, .glow-pulse { animation: none !important; }
+            .hero-zoom, .offer-bg, .glow-pulse, .pop { animation: none !important; }
         }
     </style>
 </head>
@@ -77,12 +80,13 @@
             <ul class="hidden items-center gap-8 text-sm font-medium text-zinc-300 lg:flex">
                 <li><a href="#record" class="nav-link hover:text-white">Record</a></li>
                 <li><a href="#facilities" class="nav-link hover:text-white">Facilities</a></li>
+                <li><a href="#booking" class="nav-link hover:text-white">Book a Slot</a></li>
                 <li><a href="#membership" class="nav-link hover:text-white">Membership</a></li>
                 <li><a href="#offers" class="nav-link hover:text-white">Offers</a></li>
                 <li><a href="#reviews" class="nav-link hover:text-white">Reviews</a></li>
                 <li><a href="#contact" class="nav-link hover:text-white">Contact</a></li>
             </ul>
-            <a href="#contact" class="hidden rounded-full bg-amber-500 px-5 py-2.5 text-sm font-bold text-zinc-950 transition-transform duration-300 hover:scale-105 hover:bg-amber-400 lg:inline-block">
+            <a href="#booking" class="hidden rounded-full bg-amber-500 px-5 py-2.5 text-sm font-bold text-zinc-950 transition-transform duration-300 hover:scale-105 hover:bg-amber-400 lg:inline-block">
                 Book Now
             </a>
             <button @click="open = !open" class="text-2xl lg:hidden" :aria-expanded="open" aria-label="Toggle menu">
@@ -93,10 +97,11 @@
             <ul class="flex flex-col gap-1 px-6 py-4 text-zinc-200" @click="open = false">
                 <li><a href="#record" class="block py-2">Record</a></li>
                 <li><a href="#facilities" class="block py-2">Facilities</a></li>
+                <li><a href="#booking" class="block py-2">Book a Slot</a></li>
                 <li><a href="#membership" class="block py-2">Membership</a></li>
                 <li><a href="#offers" class="block py-2">Offers</a></li>
                 <li><a href="#reviews" class="block py-2">Reviews</a></li>
-                <li><a href="#contact" class="mt-2 block rounded-full bg-amber-500 py-2.5 text-center font-bold text-zinc-950">Book Now</a></li>
+                <li><a href="#booking" class="mt-2 block rounded-full bg-amber-500 py-2.5 text-center font-bold text-zinc-950">Book Now</a></li>
             </ul>
         </div>
     </header>
@@ -122,7 +127,7 @@
                     Home to 32+ World-Class Courts, Olympic-Grade Shooting Ranges, and Premium Amenities.
                 </p>
                 <div class="hero-word mt-10 flex flex-wrap gap-4" style="animation-delay:1s">
-                    <a href="#contact" class="group inline-flex items-center gap-3 rounded-full bg-amber-500 px-8 py-4 font-bold text-zinc-950 shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:bg-amber-400">
+                    <a href="#booking" class="group inline-flex items-center gap-3 rounded-full bg-amber-500 px-8 py-4 font-bold text-zinc-950 shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:bg-amber-400">
                         Book Court Now <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
                     </a>
                     <a href="#membership" class="inline-flex items-center gap-3 rounded-full border border-white/25 bg-white/5 px-8 py-4 font-semibold backdrop-blur transition-all duration-300 hover:border-white/60 hover:bg-white/10">
@@ -236,6 +241,301 @@
             </div>
         </section>
 
+        <section id="booking" x-data="booking" class="relative overflow-clip border-y border-white/10 bg-zinc-950 py-28">
+            <div class="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl"></div>
+            <div class="pointer-events-none absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-orange-600/10 blur-3xl"></div>
+            <div class="relative mx-auto max-w-7xl px-6">
+                <div class="reveal-element mx-auto mb-14 max-w-2xl text-center">
+                    <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-500">Book a Slot</p>
+                    <h2 class="font-display mt-3 text-4xl font-black tracking-tight md:text-5xl">Reserve Your Court in Seconds</h2>
+                    <p class="mt-4 text-zinc-400">Pick a sport, a day and as many 30-minute slots as you like. Your total updates instantly.</p>
+                    <div class="mt-6 flex flex-wrap justify-center gap-3 text-sm">
+                        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900 px-4 py-1.5 font-medium text-zinc-300"><i class="fa-regular fa-clock text-amber-500"></i> 30 min per slot</span>
+                        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900 px-4 py-1.5 font-medium text-zinc-300"><i class="fa-solid fa-sun text-amber-400"></i> 5:30 AM – 11 PM</span>
+                        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900 px-4 py-1.5 font-medium text-zinc-300"><i class="fa-solid fa-wallet text-amber-500"></i> Pay at venue</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                    <div class="space-y-6 lg:col-span-2">
+                        <!-- Step 1: Sport -->
+                        <div class="rounded-3xl border border-white/10 bg-zinc-900 p-6 shadow-lg shadow-black/30 md:p-8">
+                            <div class="mb-5 flex items-center gap-3">
+                                <span class="font-display grid h-8 w-8 place-items-center rounded-full bg-amber-500 text-sm font-black text-zinc-950">1</span>
+                                <h3 class="font-display text-lg font-extrabold">Choose your sport</h3>
+                            </div>
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <button type="button" @click="sport = 'badminton'" :aria-pressed="sport === 'badminton'"
+                                        :class="sport === 'badminton' ? 'border-amber-500 bg-amber-500/10 ring-4 ring-amber-500/20' : 'border-white/10 bg-zinc-950 hover:border-amber-500/50'"
+                                        class="relative flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition-all duration-200">
+                                    <img src="assets/images/badminton.jpg" alt="" class="h-16 w-16 shrink-0 rounded-xl object-cover">
+                                    <span class="flex-1">
+                                        <span class="font-display block text-lg font-extrabold">Badminton</span>
+                                        <span class="block text-sm text-zinc-500">Court 1 – 4</span>
+                                    </span>
+                                    <span class="text-right">
+                                        <span class="font-display block text-xl font-black text-amber-400">₹150</span>
+                                        <span class="block whitespace-nowrap text-xs text-zinc-500">per 30 min</span>
+                                    </span>
+                                    <span x-show="sport === 'badminton'" class="absolute -right-2 -top-2 grid h-7 w-7 place-items-center rounded-full bg-amber-500 text-xs text-zinc-950 shadow-md"><i class="fa-solid fa-check"></i></span>
+                                </button>
+                                <button type="button" @click="sport = 'football'" :aria-pressed="sport === 'football'"
+                                        :class="sport === 'football' ? 'border-amber-500 bg-amber-500/10 ring-4 ring-amber-500/20' : 'border-white/10 bg-zinc-950 hover:border-amber-500/50'"
+                                        class="relative flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition-all duration-200">
+                                    <span class="grid h-16 w-16 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-600 text-3xl text-zinc-950"><i class="fa-solid fa-futbol"></i></span>
+                                    <span class="flex-1">
+                                        <span class="font-display block text-lg font-extrabold">Football</span>
+                                        <span class="block text-sm text-zinc-500">Turf A – D</span>
+                                    </span>
+                                    <span class="text-right">
+                                        <span class="font-display block text-xl font-black text-amber-400">₹400</span>
+                                        <span class="block whitespace-nowrap text-xs text-zinc-500">per 30 min</span>
+                                    </span>
+                                    <span x-show="sport === 'football'" class="absolute -right-2 -top-2 grid h-7 w-7 place-items-center rounded-full bg-amber-500 text-xs text-zinc-950 shadow-md"><i class="fa-solid fa-check"></i></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 & 3: Date + Court -->
+                        <div class="rounded-3xl border border-white/10 bg-zinc-900 p-6 shadow-lg shadow-black/30 md:p-8">
+                            <div class="mb-5 flex items-center gap-3">
+                                <span class="font-display grid h-8 w-8 place-items-center rounded-full bg-amber-500 text-sm font-black text-zinc-950">2</span>
+                                <h3 class="font-display text-lg font-extrabold">Pick a date</h3>
+                            </div>
+                            <div class="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
+                                <template x-for="(d, i) in days" :key="d.key">
+                                    <button type="button" @click="dateIdx = i" :aria-pressed="dateIdx === i"
+                                            :class="dateIdx === i ? 'border-amber-500 bg-amber-500 text-zinc-950 shadow-lg shadow-amber-500/30' : 'border-white/10 bg-zinc-950 text-zinc-300 hover:border-amber-500/60'"
+                                            class="flex w-20 shrink-0 flex-col items-center rounded-2xl border-2 py-3 transition-all duration-200">
+                                        <span class="text-[11px] font-semibold uppercase tracking-wide" :class="dateIdx === i ? 'text-zinc-900/70' : 'text-zinc-500'" x-text="d.top"></span>
+                                        <span class="font-display text-2xl font-black" x-text="d.num"></span>
+                                        <span class="text-xs" :class="dateIdx === i ? 'text-zinc-900/70' : 'text-zinc-500'" x-text="d.month"></span>
+                                    </button>
+                                </template>
+                            </div>
+
+                            <div class="mb-5 mt-8 flex items-center gap-3">
+                                <span class="font-display grid h-8 w-8 place-items-center rounded-full bg-amber-500 text-sm font-black text-zinc-950">3</span>
+                                <h3 class="font-display text-lg font-extrabold">Pick a <span x-text="sport === 'football' ? 'turf' : 'court'"></span></h3>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                                <template x-for="(c, i) in courts" :key="c">
+                                    <button type="button" @click="court = i" :aria-pressed="court === i"
+                                            :class="court === i ? 'border-amber-500 bg-amber-500/10 text-amber-300 ring-4 ring-amber-500/20' : 'border-white/10 bg-zinc-950 text-zinc-300 hover:border-amber-500/60'"
+                                            class="flex flex-col items-center rounded-2xl border-2 px-3 py-3 transition-all duration-200">
+                                        <span class="font-semibold" x-text="c"></span>
+                                        <span class="mt-0.5 text-xs" :class="court === i ? 'text-amber-400' : 'text-zinc-500'" x-text="freeCount(i) + ' slots free'"></span>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Slots -->
+                        <div class="rounded-3xl border border-white/10 bg-zinc-900 p-6 shadow-lg shadow-black/30 md:p-8">
+                            <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="font-display grid h-8 w-8 place-items-center rounded-full bg-amber-500 text-sm font-black text-zinc-950">4</span>
+                                    <h3 class="font-display text-lg font-extrabold">Select time slots</h3>
+                                </div>
+                                <button type="button" x-show="count" @click="clear()" class="text-sm font-semibold text-zinc-500 hover:text-red-500"><i class="fa-solid fa-rotate-left mr-1"></i> Clear all</button>
+                            </div>
+                            <div class="mb-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-zinc-400">
+                                <span class="inline-flex items-center gap-2"><span class="h-4 w-4 rounded-md border-2 border-amber-500/40 bg-zinc-950"></span> Available</span>
+                                <span class="inline-flex items-center gap-2"><span class="h-4 w-4 rounded-md bg-amber-500"></span> Selected</span>
+                                <span class="inline-flex items-center gap-2"><span class="booked-stripes h-4 w-4 rounded-md border border-white/5 bg-zinc-800"></span> Booked</span>
+                                <span class="inline-flex items-center gap-2"><span class="h-4 w-4 rounded-md border border-white/5 bg-zinc-900/60"></span> Time passed</span>
+                            </div>
+
+                            <div class="space-y-7">
+                                <template x-for="p in periods" :key="p.name">
+                                    <div>
+                                        <p class="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-300">
+                                            <i class="fa-solid" :class="p.icon + ' ' + p.color"></i>
+                                            <span x-text="p.name"></span>
+                                            <span class="font-normal text-zinc-500" x-text="p.hint"></span>
+                                        </p>
+                                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+                                            <template x-for="s in slotsIn(p)" :key="s">
+                                                <button type="button" @click="toggle(s)" :disabled="!isPickable(s)" :aria-pressed="isSelected(s)"
+                                                        :class="{
+                                                            'border-amber-500/25 bg-zinc-950 text-zinc-200 hover:-translate-y-0.5 hover:border-amber-500 hover:shadow-md hover:shadow-amber-500/10': status(s) === 'free',
+                                                            'border-amber-500 bg-amber-500 text-zinc-950 shadow-lg shadow-amber-500/30': status(s) === 'selected',
+                                                            'booked-stripes cursor-not-allowed border-white/5 bg-zinc-800/70 text-zinc-500': status(s) === 'booked',
+                                                            'cursor-not-allowed border-white/5 bg-zinc-900/60 text-zinc-600': status(s) === 'past'
+                                                        }"
+                                                        class="relative rounded-xl border-2 px-3 py-2.5 text-left transition-all duration-150">
+                                                    <span class="block text-sm font-semibold" :class="status(s) === 'booked' && 'line-through'" x-text="chipLabel(s)"></span>
+                                                    <span class="mt-0.5 flex items-center gap-1 text-[11px]"
+                                                          :class="{ 'text-amber-400': status(s) === 'free', 'text-zinc-900/70': status(s) === 'selected' }"
+                                                          x-text="({ free: inr(prices[sport]), selected: 'Selected', booked: 'Booked', past: 'Unavailable' })[status(s)]"></span>
+                                                    <i x-show="status(s) === 'selected'" class="fa-solid fa-circle-check absolute right-2.5 top-2.5 text-zinc-950"></i>
+                                                </button>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary panel -->
+                    <aside class="lg:sticky lg:top-24 lg:self-start">
+                        <div class="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-xl shadow-black/40">
+                            <div class="bg-gradient-to-br from-amber-500 to-orange-600 p-6 text-zinc-950">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-display text-xl font-extrabold">Your Booking</h3>
+                                    <span class="rounded-full bg-zinc-950 px-3 py-1 text-xs font-black text-amber-400" x-text="count + (count === 1 ? ' slot' : ' slots')"></span>
+                                </div>
+                                <div class="mt-5 grid grid-cols-2 gap-3">
+                                    <div class="rounded-2xl bg-zinc-950/15 p-3">
+                                        <p class="text-xs text-zinc-900/70">Slots selected</p>
+                                        <p class="font-display mt-1 text-3xl font-black" x-text="count"></p>
+                                    </div>
+                                    <div class="rounded-2xl bg-zinc-950/15 p-3">
+                                        <p class="text-xs text-zinc-900/70">Play time</p>
+                                        <p class="font-display mt-1 text-3xl font-black" x-text="duration"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6">
+                                <div x-show="!count" class="py-6 text-center">
+                                    <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-amber-500/10 text-2xl text-amber-400"><i class="fa-regular fa-calendar-check"></i></span>
+                                    <p class="mt-4 font-semibold">No slots selected yet</p>
+                                    <p class="mt-1 text-sm text-zinc-500">Tap any available time to add it here.</p>
+                                </div>
+
+                                <ul x-show="count" class="max-h-72 space-y-3 overflow-y-auto pr-1">
+                                    <template x-for="g in groups" :key="g.id">
+                                        <li class="flex items-start gap-3 rounded-2xl border border-white/5 bg-zinc-950 p-3">
+                                            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl" :class="g.sport === 'football' ? 'bg-amber-500/15 text-amber-400' : 'bg-orange-500/15 text-orange-400'">
+                                                <i class="fa-solid" :class="g.sport === 'football' ? 'fa-futbol' : 'fa-feather-pointed'"></i>
+                                            </span>
+                                            <div class="min-w-0 flex-1">
+                                                <p class="text-sm font-semibold" x-text="g.range"></p>
+                                                <p class="mt-0.5 text-xs text-zinc-500" x-text="`${sportNames[g.sport]} · ${g.court} · ${g.date}`"></p>
+                                                <p class="mt-0.5 text-xs text-zinc-500" x-text="`${g.n} slot${g.n === 1 ? '' : 's'} × ${inr(prices[g.sport])}`"></p>
+                                            </div>
+                                            <div class="flex flex-col items-end gap-1">
+                                                <span class="text-sm font-bold" x-text="inr(g.n * prices[g.sport])"></span>
+                                                <button type="button" @click="removeGroup(g)" class="grid h-6 w-6 place-items-center rounded-full text-xs text-zinc-500 hover:bg-red-500/10 hover:text-red-400" :aria-label="'Remove ' + g.range"><i class="fa-solid fa-xmark"></i></button>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+
+                                <div x-show="count" class="mt-5 space-y-2 border-t border-dashed border-white/10 pt-5 text-sm">
+                                    <template x-for="b in breakdown" :key="b.sport">
+                                        <div class="flex justify-between text-zinc-400">
+                                            <span x-text="`${sportNames[b.sport]} · ${b.n} × ${inr(prices[b.sport])}`"></span>
+                                            <span class="font-semibold text-zinc-100" x-text="inr(b.n * prices[b.sport])"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="mt-5 flex items-end justify-between border-t border-white/10 pt-5">
+                                    <span class="text-sm font-semibold text-zinc-500">Total</span>
+                                    <span class="font-display text-4xl font-black text-amber-400" x-text="inr(total)"></span>
+                                </div>
+
+                                <button type="button" @click="openModal()" :disabled="!count"
+                                        class="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-amber-500 py-4 font-bold text-zinc-950 shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-[1.02] hover:bg-amber-400 disabled:cursor-not-allowed disabled:bg-zinc-800 disabled:text-zinc-500 disabled:shadow-none disabled:hover:scale-100">
+                                    Continue to book <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                <p class="mt-3 text-center text-xs text-zinc-500"><i class="fa-solid fa-shield-halved mr-1 text-amber-500"></i> Pay at venue · Free cancellation up to 2 hrs before</p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- Mobile summary bar -->
+            <div x-cloak x-show="count && !modal" x-transition.opacity
+                 class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-zinc-950/95 px-5 py-4 shadow-[0_-12px_30px_-12px_rgba(0,0,0,0.6)] backdrop-blur lg:hidden">
+                <div class="mx-auto flex max-w-xl items-center gap-4">
+                    <div class="flex-1">
+                        <p class="text-xs font-medium text-zinc-500" x-text="`${count} slot${count === 1 ? '' : 's'} · ${duration}`"></p>
+                        <p class="font-display text-2xl font-black text-amber-400" x-text="inr(total)"></p>
+                    </div>
+                    <button type="button" @click="openModal()" class="inline-flex items-center gap-2 rounded-full bg-amber-500 px-6 py-3 font-bold text-zinc-950 shadow-lg shadow-amber-500/30">
+                        Continue <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Confirmation modal -->
+            <div x-cloak x-show="modal" x-transition.opacity x-effect="document.body.classList.toggle('overflow-hidden', modal)"
+                 @keydown.escape.window="modal && closeModal()" @click.self="closeModal()"
+                 class="fixed inset-0 z-[60] grid place-items-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="booking-title">
+                <div x-show="modal" x-transition.scale.95 class="max-h-[90dvh] w-full max-w-lg overflow-y-auto rounded-3xl border border-white/10 bg-zinc-900 p-6 shadow-2xl md:p-8">
+                    <form x-show="step === 'form'" @submit.prevent="submit()" novalidate>
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-amber-500">Almost there</p>
+                                <h3 id="booking-title" class="font-display mt-1 text-2xl font-black">Confirm your slots</h3>
+                            </div>
+                            <button type="button" @click="closeModal()" class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-zinc-800 text-zinc-400 hover:bg-zinc-700" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+
+                        <div class="mt-6 rounded-2xl bg-zinc-950 p-4">
+                            <ul class="space-y-2 text-sm">
+                                <template x-for="g in groups" :key="g.id">
+                                    <li class="flex justify-between gap-3">
+                                        <span><span class="font-semibold" x-text="g.range"></span><span class="block text-xs text-zinc-500" x-text="`${sportNames[g.sport]} · ${g.court} · ${g.date}`"></span></span>
+                                        <span class="font-semibold" x-text="inr(g.n * prices[g.sport])"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                            <div class="mt-3 flex justify-between border-t border-white/10 pt-3 font-bold">
+                                <span x-text="`Total · ${count} slot${count === 1 ? '' : 's'}`"></span>
+                                <span class="text-amber-400" x-text="inr(total)"></span>
+                            </div>
+                        </div>
+
+                        <label class="mt-6 block">
+                            <span class="text-sm font-semibold">Full name</span>
+                            <input x-ref="name" x-model="name" type="text" autocomplete="name" placeholder="e.g. Rajesh Kumar"
+                                   :class="errors.name ? 'border-red-400' : 'border-white/10'"
+                                   class="mt-1.5 w-full rounded-xl border-2 bg-zinc-950 px-4 py-3 text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20">
+                            <span x-show="errors.name" class="mt-1 block text-xs text-red-500" x-text="errors.name"></span>
+                        </label>
+                        <label class="mt-4 block">
+                            <span class="text-sm font-semibold">Mobile number</span>
+                            <span :class="errors.phone ? 'border-red-400' : 'border-white/10'"
+                                  class="mt-1.5 flex overflow-hidden rounded-xl border-2 transition focus-within:border-amber-500 focus-within:ring-4 focus-within:ring-amber-500/20">
+                                <span class="grid place-items-center border-r border-white/10 bg-zinc-800 px-3 text-sm font-semibold text-zinc-400">+91</span>
+                                <input x-model="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="9876543210" class="w-full bg-zinc-950 px-4 py-3 text-zinc-100 outline-none placeholder:text-zinc-600">
+                            </span>
+                            <span x-show="errors.phone" class="mt-1 block text-xs text-red-500" x-text="errors.phone"></span>
+                        </label>
+
+                        <button type="submit" class="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-amber-500 py-4 font-bold text-zinc-950 shadow-lg shadow-amber-500/30 transition-all hover:bg-amber-400">
+                            <i class="fa-solid fa-lock"></i> <span x-text="`Confirm booking · ${inr(total)}`"></span>
+                        </button>
+                    </form>
+
+                    <div x-show="step === 'done'" class="text-center">
+                        <span x-show="step === 'done'" class="pop mx-auto grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-amber-400 to-orange-600 text-4xl text-zinc-950 shadow-lg shadow-amber-500/40"><i class="fa-solid fa-check"></i></span>
+                        <h3 class="font-display mt-6 text-2xl font-black">Booking confirmed!</h3>
+                        <p class="mt-2 text-zinc-400">Thanks, <span class="font-semibold" x-text="confirmed?.name"></span>. Show this ID at the front desk.</p>
+                        <p class="mt-4 inline-block rounded-full bg-amber-500/15 px-5 py-2 font-mono text-lg font-bold tracking-widest text-amber-400" x-text="bookingId"></p>
+                        <ul class="mt-6 space-y-2 rounded-2xl bg-zinc-950 p-4 text-left text-sm">
+                            <template x-for="g in confirmed?.groups || []" :key="g.id">
+                                <li class="flex justify-between gap-3">
+                                    <span><span class="font-semibold" x-text="g.range"></span><span class="block text-xs text-zinc-500" x-text="`${sportNames[g.sport]} · ${g.court} · ${g.date}`"></span></span>
+                                    <span class="font-semibold" x-text="inr(g.n * prices[g.sport])"></span>
+                                </li>
+                            </template>
+                            <li class="flex justify-between border-t border-white/10 pt-2 font-bold">
+                                <span>Total (pay at venue)</span><span class="text-amber-400" x-text="inr(confirmed?.total || 0)"></span>
+                            </li>
+                        </ul>
+                        <button type="button" @click="finish()" class="mt-6 w-full rounded-full bg-amber-500 py-4 font-bold text-zinc-950 hover:bg-amber-400">Done</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 5. Membership -->
         <section id="membership" class="relative bg-zinc-900/50 py-28">
             <div class="mx-auto max-w-7xl px-6">
@@ -255,7 +555,7 @@
                             <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Basic equipment rental options</li>
                             <li class="flex gap-3"><i class="fa-solid fa-check mt-1 text-amber-500"></i> Book online or at the desk</li>
                         </ul>
-                        <a href="#contact" class="mt-10 block rounded-full border border-white/20 py-3.5 text-center font-semibold transition-colors hover:bg-white hover:text-zinc-950">Book a Court</a>
+                        <a href="#booking" class="mt-10 block rounded-full border border-white/20 py-3.5 text-center font-semibold transition-colors hover:bg-white hover:text-zinc-950">Book a Court</a>
                     </div>
 
                     <div class="reveal-element glow-pulse relative rounded-3xl border-2 border-amber-500 bg-gradient-to-b from-zinc-900 to-zinc-950 p-10 transition-all duration-300 hover:-translate-y-2 lg:py-14" style="transition-delay:.1s">
@@ -297,7 +597,7 @@
                     </span>
                     <h2 class="font-display mt-6 text-4xl font-black leading-tight md:text-5xl">Festive Sports Surge</h2>
                     <p class="mt-4 text-lg text-white/90 md:text-xl">Get <strong class="text-white">20% off</strong> on bulk badminton court block-bookings this month.</p>
-                    <a href="#contact" class="mt-8 inline-flex items-center gap-3 rounded-full bg-zinc-950 px-8 py-4 font-bold transition-transform duration-300 hover:scale-105">
+                    <a href="#booking" class="mt-8 inline-flex items-center gap-3 rounded-full bg-zinc-950 px-8 py-4 font-bold transition-transform duration-300 hover:scale-105">
                         Claim Offer <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
@@ -415,6 +715,115 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
         document.querySelectorAll('.reveal-element').forEach((el) => observer.observe(el));
+
+        document.addEventListener('alpine:init', () => {
+            const PRICES = { badminton: 150, football: 400 };
+            const COURTS = { badminton: ['Court 1', 'Court 2', 'Court 3', 'Court 4'], football: ['Turf A', 'Turf B', 'Turf C', 'Turf D'] };
+            const SPORT_NAMES = { badminton: 'Badminton', football: 'Football' };
+            const SLOTS = Array.from({ length: 35 }, (_, i) => 330 + i * 30);
+            const PERIODS = [
+                { name: 'Morning', hint: '5:30 AM – 12 PM', icon: 'fa-sun', color: 'text-amber-400', from: 330, to: 720 },
+                { name: 'Afternoon', hint: '12 – 4 PM', icon: 'fa-cloud-sun', color: 'text-orange-400', from: 720, to: 960 },
+                { name: 'Evening', hint: '4 – 8 PM', icon: 'fa-cloud-moon', color: 'text-rose-400', from: 960, to: 1200 },
+                { name: 'Night', hint: '8 – 11 PM', icon: 'fa-moon', color: 'text-indigo-400', from: 1200, to: 1380 },
+            ];
+            const pad = (n) => String(n).padStart(2, '0');
+            const dateKey = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+            const meridiem = (m) => (Math.floor(m / 60) % 24 < 12 ? 'AM' : 'PM');
+            const clock = (m) => `${Math.floor(m / 60) % 12 || 12}:${pad(m % 60)}`;
+            const fmtTime = (m) => `${clock(m)} ${meridiem(m)}`;
+            const currency = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+            const hash = (s) => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; };
+
+            Alpine.data('booking', () => ({
+                sport: 'badminton', court: 0, dateIdx: 0, selected: [], days: [], now: Date.now(),
+                modal: false, step: 'form', name: '', phone: '', errors: {}, bookingId: '', confirmed: null,
+                prices: PRICES, sportNames: SPORT_NAMES, periods: PERIODS, slots: SLOTS,
+
+                init() {
+                    const base = new Date(); base.setHours(0, 0, 0, 0);
+                    this.days = Array.from({ length: 7 }, (_, i) => {
+                        const d = new Date(base); d.setDate(base.getDate() + i);
+                        return {
+                            key: dateKey(d), num: d.getDate(),
+                            top: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : d.toLocaleDateString('en-IN', { weekday: 'short' }),
+                            month: d.toLocaleDateString('en-IN', { month: 'short' }),
+                            label: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' }),
+                        };
+                    });
+                    if (SLOTS.every((s) => this.isPast(s))) this.dateIdx = 1;
+                    setInterval(() => (this.now = Date.now()), 60000);
+                },
+
+                get courts() { return COURTS[this.sport]; },
+                key(start, court = this.court) { return `${this.sport}|${this.days[this.dateIdx].key}|${court}|${start}`; },
+                slotsIn(p) { return SLOTS.filter((s) => s >= p.from && s < p.to); },
+                isBooked(start, court = this.court) { return hash(this.key(start, court)) % 100 < 28; },
+                isPast(start) {
+                    if (this.dateIdx !== 0) return false;
+                    const d = new Date(this.now);
+                    return start < d.getHours() * 60 + d.getMinutes();
+                },
+                isSelected(start) { return this.selected.includes(this.key(start)); },
+                isPickable(start) { return this.isSelected(start) || (!this.isPast(start) && !this.isBooked(start)); },
+                status(start) { return this.isSelected(start) ? 'selected' : this.isPast(start) ? 'past' : this.isBooked(start) ? 'booked' : 'free'; },
+                freeCount(court) { return SLOTS.filter((s) => !this.isPast(s) && !this.isBooked(s, court)).length; },
+                toggle(start) {
+                    const k = this.key(start), i = this.selected.indexOf(k);
+                    if (i > -1) this.selected.splice(i, 1);
+                    else if (this.isPickable(start)) this.selected.push(k);
+                },
+                clear() { this.selected = []; },
+                chipLabel(s) { return meridiem(s) === meridiem(s + 30) ? `${clock(s)} – ${fmtTime(s + 30)}` : `${fmtTime(s)} – ${fmtTime(s + 30)}`; },
+                inr(n) { return currency.format(n); },
+
+                get items() {
+                    return this.selected.map((k) => { const [sport, date, court, start] = k.split('|'); return { sport, date, court: +court, start: +start }; });
+                },
+                get count() { return this.selected.length; },
+                get total() { return this.items.reduce((t, i) => t + PRICES[i.sport], 0); },
+                get duration() { const m = this.count * 30; return m < 60 ? `${m} min` : `${m / 60} hr${m === 60 ? '' : 's'}`; },
+                get breakdown() {
+                    return Object.keys(PRICES).map((sport) => ({ sport, n: this.items.filter((i) => i.sport === sport).length })).filter((b) => b.n);
+                },
+                get groups() {
+                    const sorted = [...this.items].sort((a, b) => a.date.localeCompare(b.date) || a.sport.localeCompare(b.sport) || a.court - b.court || a.start - b.start);
+                    const out = [];
+                    for (const i of sorted) {
+                        const last = out[out.length - 1];
+                        if (last && last.sport === i.sport && last.dateKey === i.date && last.courtIdx === i.court && last.to === i.start) {
+                            last.to += 30; last.n++; last.keys.push(`${i.sport}|${i.date}|${i.court}|${i.start}`);
+                        } else {
+                            out.push({ sport: i.sport, dateKey: i.date, courtIdx: i.court, from: i.start, to: i.start + 30, n: 1, keys: [`${i.sport}|${i.date}|${i.court}|${i.start}`] });
+                        }
+                    }
+                    return out.map((g) => ({
+                        ...g, id: g.keys[0], court: COURTS[g.sport][g.courtIdx],
+                        date: this.days.find((d) => d.key === g.dateKey)?.label ?? g.dateKey,
+                        range: `${fmtTime(g.from)} – ${fmtTime(g.to)}`,
+                    }));
+                },
+                removeGroup(g) { this.selected = this.selected.filter((k) => !g.keys.includes(k)); },
+
+                openModal() {
+                    if (!this.count) return;
+                    this.step = 'form'; this.errors = {}; this.modal = true;
+                    this.$nextTick(() => this.$refs.name.focus());
+                },
+                closeModal() { this.step === 'done' ? this.finish() : (this.modal = false); },
+                submit() {
+                    const phone = this.phone.replace(/\D/g, '');
+                    this.errors = {};
+                    if (this.name.trim().length < 2) this.errors.name = 'Please enter your name.';
+                    if (!/^[6-9]\d{9}$/.test(phone)) this.errors.phone = 'Enter a valid 10-digit mobile number.';
+                    if (Object.keys(this.errors).length) return;
+                    this.confirmed = { name: this.name.trim(), phone, groups: this.groups, total: this.total };
+                    this.bookingId = 'GS-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+                    this.step = 'done';
+                },
+                finish() { this.modal = false; this.selected = []; this.name = ''; this.phone = ''; this.confirmed = null; },
+            }));
+        });
     </script>
 </body>
 </html>
